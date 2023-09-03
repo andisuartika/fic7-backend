@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,5 +21,10 @@ Route::get('/', function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('home', function () {
         return view('admin.dashboard');
-    });
+    })->name('home')->middleware('can:dashboard');
+    Route::get('profile', function () {
+        return view('admin.profile');
+    })->name('profile')->middleware('can:dashboard');
+
+    Route::resource('user', UserController::class);
 });
